@@ -6,77 +6,84 @@
 <html lang="en">
 	<head>
 		<title>Duck Debugger</title>
+		<!-- External CSS links -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		
+		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<!-- Include local CSS file -->
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
+		
+		<!-- Latest jQuery version -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
 	
 	
 	<body>
 		<div class="container-fluid h-100">
-			<div class="row justify-content-center h-100">		
+			<div class="row justify-content-center h-100">
+				<!-- Chat column -->
 				<div class="col-md-8 col-xl-6 chat">
 					<div class="card">
+						<!-- Chat header -->
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
+									<!-- User avatar -->
 									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXy1v7IKp76-N7SxsIyayLK_JQH1LHt9bG7w&s" class="rounded-circle user_img">
+									<!-- Online indicator -->
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
+									<!-- Chat title and subtitle -->
 									<div class="text-container">
-									<div>
-									  <span class="inline-text">Duck Debugger lite</span>
-									  <p>Ask me anything! quack!</p>
-									</div>
-									<div><span class="dark-mode-text">Dark mode:</span></div>
-									<label class="bb8-toggle" for="myCheck">
-									  <input class="bb8-toggle__checkbox" type="checkbox" id="myCheck" onclick="myFunction()">
-									  <div class="bb8-toggle__container">
-										<div class="bb8-toggle__scenery">
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="bb8-toggle__star"></div>
-										  <div class="tatto-1"></div>
-										  <div class="tatto-2"></div>
-										  <div class="gomrassen"></div>
-										  <div class="hermes"></div>
-										  <div class="chenini"></div>
-										  <div class="bb8-toggle__cloud"></div>
-										  <div class="bb8-toggle__cloud"></div>
-										  <div class="bb8-toggle__cloud"></div>
+										<div>
+											<span class="inline-text">Duck Debugger lite</span>
+											<p>Ask me anything! quack!</p>
 										</div>
-										<div class="bb8">
-										  <div class="bb8__head-container">
-											<div class="bb8__antenna"></div>
-											<div class="bb8__antenna"></div>
-											<div class="bb8__head"></div>
-										  </div>
-										  <div class="bb8__body"></div>
-										</div>
-										<div class="artificial__hidden">
-										  <div class="bb8__shadow"></div>
-										</div>
-									  </div>
-									</label>
+										<!-- Dark mode toggle -->
+										<div><span class="dark-mode-text">Dark mode:</span></div>
+										<label class="bb8-toggle" for="myCheck">
+											<!-- Checkbox input -->
+											<input class="bb8-toggle__checkbox" type="checkbox" id="myCheck" onclick="myFunction()">
+											<!-- BB-8 themed toggle -->
+											<div class="bb8-toggle__container">
+												<div class="bb8-toggle__scenery">
+													<!-- Stars and decorative elements -->
+													<div class="bb8-toggle__star"></div>
+													<div class="bb8-toggle__star"></div>
+													<!-- BB-8 body parts -->
+													<div class="bb8"></div>
+													<div class="bb8__head-container">
+														<div class="bb8__antenna"></div>
+														<div class="bb8__antenna"></div>
+														<div class="bb8__head"></div>
+													</div>
+													<div class="bb8__body"></div>
+												</div>
+												<!-- Hidden elements for animation -->
+												<div class="artificial__hidden">
+													<div class="bb8__shadow"></div>
+												</div>
+											</div>
+										</label>
 									</div>
 								</div>
 							</div>
 						</div>
+						<!-- Chat messages container -->
 						<div id="messageFormeight" class="card-body msg_card_body">
-							
-							
+							<!-- Messages will be dynamically added here -->
 						</div>
+						<!-- Chat input area -->
 						<div class="card-footer">
 							<form id="messageArea" class="input-group">
-                                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required/>
+								<!-- Input field for typing messages -->
+								<input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required/>
 								<div class="input-group-append">
+									<!-- Send button -->
 									<button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
 								</div>
 							</form>
@@ -84,22 +91,32 @@
 					</div>
 				</div>
 			</div>
-        </div>
-        
+		</div>
+	
+		<!-- JavaScript for dynamic behavior -->
 		<script>
 			$(document).ready(function() {
+				// Handle form submission
 				$("#messageArea").on("submit", function(event) {
+					// Get current time
 					const date = new Date();
 					const hour = date.getHours();
 					const minute = date.getMinutes();
-					const str_time = hour+":"+minute;
+					const str_time = hour + ":" + minute;
+	
+					// Get user input
 					var rawText = $("#text").val();
-
-					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
-					
+	
+					// Construct HTML for user message
+					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">' + str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+	
+					// Clear input field
 					$("#text").val("");
+	
+					// Append user message to chat window
 					$("#messageFormeight").append(userHtml);
-
+	
+					// Send message to server via AJAX
 					$.ajax({
 						data: {
 							msg: rawText,
@@ -107,25 +124,28 @@
 						type: "POST",
 						url: "/get",
 					}).done(function(data) {
+						// Construct HTML for bot message
 						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXy1v7IKp76-N7SxsIyayLK_JQH1LHt9bG7w&s" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + " quack!" + '<span class="msg_time">' + str_time + '</span></div></div>';
+						
+						// Append bot message to chat window
 						$("#messageFormeight").append($.parseHTML(botHtml));
-
 					});
-					
+	
+					// Prevent default form submission
 					event.preventDefault();
-
 				});
 			});
-
+	
+			// Function to toggle dark mode
 			function myFunction() {
 				var checkBox = document.getElementById("myCheck");
-				var element = document.body;;
-				if (checkBox.checked == true){
+				var element = document.body;
+				if (checkBox.checked == true) {
 					element.classList.toggle("dark-mode");
 				} else {
 					element.classList.toggle("dark-mode");
 				}
 			}
 		</script>
-    </body>
+	</body>
 </html>
